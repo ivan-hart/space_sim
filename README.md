@@ -22,19 +22,14 @@
 
 ## 📝 Table of Contents
 
-- [About](#about)
 - [Usage](#usage)
 - [Built Using](#built_using)
 - [Contributing](../CONTRIBUTING.md)
 - [Authors](#authors)
 
-## 🧐 About <a name = "about"></a>
-
-Write about 1-2 paragraphs describing the purpose of your project.
-
 ### Prerequisites <a name = "built_using"></a>
 
-What things you need to install the software and how to install them.
+What things you need to install the software and how to install them.<br>
 [Odin](https://odin-lang.org/)
 
 ### Installing
@@ -44,7 +39,7 @@ A step by step series of examples that tell you how to get a development env run
 Say what the step will be
 
 ```
-git pull https://github.com/ivan-hart/space-sim && cd space-sim
+git pull https://github.com/ivan-hart/space_sim && cd space_sim
 ```
 
 To compile
@@ -54,7 +49,7 @@ odin build .
 
 To run
 ```
-./space-sim
+./space_sim
 ```
 
 End with an example of getting some data out of the system or using it for a little demo.
@@ -62,16 +57,10 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## 🎈 Usage <a name="usage"></a>
 
-Just run `./space-sim`
+Just run `./space_sim`
 
 ## ✍️ Authors <a name = "authors"></a>
 
 - [@ivan-hart](https://github.com/ivan-hart) - Idea & Initial work
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
-
-<!-- ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- References -->
+See also the list of [contributors](https://github.com/ivan-hart/space_sim/contributors) who participated in this project.
