@@ -6,7 +6,9 @@ import glm "core:math/linalg"
 import rng "core:math/rand"
 import rl "vendor:raylib"
 
-G: f32 : 9e-10
+G: f32 : 9e-5
+MIN_DIST: f32 : 3.0
+
 BODY_MASS: f32 : 1_000
 BODY_COLOR: rl.Color : {255, 255, 255, 255}
 
@@ -29,7 +31,7 @@ vec2_force :: proc(pos, dir: [2]f32, dist: f32) -> [2]f32 {
 }
 
 update :: proc(game: ^Game) {
-	if len(game.bodies) == 0 do return
+	if len(game.bodies) < 2 do return
 
 	for &top_body, top_index in game.bodies {
 		for low_body, low_index in game.bodies {
@@ -39,7 +41,7 @@ update :: proc(game: ^Game) {
 			dir := vec2_direction(top_body.pos, low_body.pos)
 			dir_norm := glm.normalize(dir)
 
-			force := vec2_force(top_body.pos, dir_norm, dist)
+			force := vec2_force(top_body.pos, dir_norm, dist if dist > MIN_DIST else MIN_DIST)
 
 			top_body.vel += force
 		}
@@ -76,9 +78,13 @@ main :: proc() {
 	game := Game {
 		bodies        = make([dynamic]Body),
 		should_update = true,
-	}
+	};defer delete(game.bodies)
 
 	for !rl.WindowShouldClose() {
+		if rl.IsKeyPressed(rl.KeyboardKey.SPACE) {
+			game.should_update = !game.should_update
+		}
+
 		if game.should_update {
 			update(&game)
 		}
