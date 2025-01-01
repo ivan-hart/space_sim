@@ -23,7 +23,7 @@ Body :: struct {
 }
 
 Game :: struct {
-	bodies:        [dynamic]Body,
+	bodies:        [MAX_BODIES]Body,
 	should_update: bool,
 }
 
@@ -81,9 +81,8 @@ main :: proc() {
 	}
 
 	game := Game {
-		bodies        = make([dynamic]Body),
 		should_update = true,
-	};defer delete(game.bodies)
+	}
 
 	for i in 0 ..< MAX_BODIES {
 		body := Body {
@@ -92,7 +91,7 @@ main :: proc() {
 				rng.float32_range(f32(-WINDOW_HEIGHT / 2), f32(WINDOW_HEIGHT / 2)),
 			},
 		}
-		append(&game.bodies, body)
+		game.bodies[i] = body
 	}
 
 	for !rl.WindowShouldClose() {
