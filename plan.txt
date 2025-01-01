@@ -1,0 +1,5 @@
+set up the render loop
+set up the rendering of the bodies
+set up basic physics
+set up advanced physics
+OPTIMISE M'FKER
