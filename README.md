@@ -29,17 +29,15 @@
 
 ### Prerequisites <a name = "built_using"></a>
 
-What things you need to install the software and how to install them.<br>
 [Odin](https://odin-lang.org/)
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running.
 
-Say what the step will be
+Clone the repo
 
 ```
-git pull https://github.com/ivan-hart/space_sim && cd space_sim
+git clone https://github.com/ivan-hart/space_sim && cd space_sim
 ```
 
 To compile
