@@ -13,7 +13,7 @@ FPS: i32 : 60
 G: f32 : 9e-8
 MIN_DIST: f32 : 3.0
 
-MAX_BODIES: i32 : 1_000
+MAX_BODIES: i32 : 100
 BODY_MASS: f32 : 1_000
 BODY_COLOR: rl.Color : {255, 255, 255, 255}
 
