@@ -6,9 +6,14 @@ import glm "core:math/linalg"
 import rng "core:math/rand"
 import rl "vendor:raylib"
 
-G: f32 : 9e-5
+WINDOW_WIDTH: i32 : 800
+WINDOW_HEIGHT: i32 : 600
+FPS: i32 : 60
+
+G: f32 : 9e-8
 MIN_DIST: f32 : 3.0
 
+MAX_BODIES: i32 : 1_000
 BODY_MASS: f32 : 1_000
 BODY_COLOR: rl.Color : {255, 255, 255, 255}
 
@@ -65,8 +70,8 @@ render :: proc(game: ^Game, camera: rl.Camera2D) {
 }
 
 main :: proc() {
-	rl.InitWindow(800, 600, "Space Simulator");defer rl.CloseWindow()
-	rl.SetTargetFPS(60)
+	rl.InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Space Simulator");defer rl.CloseWindow()
+	rl.SetTargetFPS(FPS)
 
 	camera := rl.Camera2D {
 		offset   = {400, 300},
@@ -79,6 +84,16 @@ main :: proc() {
 		bodies        = make([dynamic]Body),
 		should_update = true,
 	};defer delete(game.bodies)
+
+	for i in 0 ..< MAX_BODIES {
+		body := Body {
+			pos = {
+				rng.float32_range(f32(-WINDOW_WIDTH / 2), f32(WINDOW_WIDTH / 2)),
+				rng.float32_range(f32(-WINDOW_HEIGHT / 2), f32(WINDOW_HEIGHT / 2)),
+			},
+		}
+		append(&game.bodies, body)
+	}
 
 	for !rl.WindowShouldClose() {
 		if rl.IsKeyPressed(rl.KeyboardKey.SPACE) {
