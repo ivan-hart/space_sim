@@ -12,14 +12,39 @@ BODY_COLOR: rl.Color : {255, 255, 255, 255}
 
 Body :: struct {
 	pos: [2]f32,
+	vel: [2]f32,
 }
 
 Game :: struct {
-	bodies: [dynamic]Body,
+	bodies:        [dynamic]Body,
+	should_update: bool,
+}
+
+vec2_direction :: proc(vec_1, vec_2: [2]f32) -> [2]f32 {
+	return [2]f32{vec_2.x - vec_1.x, vec_2.y - vec_1.y}
+}
+
+vec2_force :: proc(pos, dir: [2]f32, dist: f32) -> [2]f32 {
+	return dir * (G * (BODY_MASS * BODY_MASS) / math.pow(dist, 2))
 }
 
 update :: proc(game: ^Game) {
 	if len(game.bodies) == 0 do return
+
+	for &top_body, top_index in game.bodies {
+		for low_body, low_index in game.bodies {
+			if top_index == low_index do continue
+
+			dist := glm.distance(top_body.pos, low_body.pos)
+			dir := vec2_direction(top_body.pos, low_body.pos)
+			dir_norm := glm.normalize(dir)
+
+			force := vec2_force(top_body.pos, dir_norm, dist)
+
+			top_body.vel += force
+		}
+		top_body.pos += top_body.vel
+	}
 }
 
 render :: proc(game: ^Game, camera: rl.Camera2D) {
@@ -39,6 +64,7 @@ render :: proc(game: ^Game, camera: rl.Camera2D) {
 
 main :: proc() {
 	rl.InitWindow(800, 600, "Space Simulator");defer rl.CloseWindow()
+	rl.SetTargetFPS(60)
 
 	camera := rl.Camera2D {
 		offset   = {400, 300},
@@ -48,10 +74,14 @@ main :: proc() {
 	}
 
 	game := Game {
-		bodies = make([dynamic]Body),
+		bodies        = make([dynamic]Body),
+		should_update = true,
 	}
 
 	for !rl.WindowShouldClose() {
+		if game.should_update {
+			update(&game)
+		}
 		render(&game, camera)
 	}
 }
